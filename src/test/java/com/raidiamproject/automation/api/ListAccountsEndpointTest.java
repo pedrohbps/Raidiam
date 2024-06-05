@@ -72,7 +72,7 @@ public class ListAccountsEndpointTest extends Base {
         assertThat(allAccountNumbersValid, is(true));
 
         // Validate Other Parts of the Payload
-        response.then().body("links.self", is("localhost:8080/test-api/accounts/v1/accounts"));   
+        response.then().body("links.self", is(systemUrl.replace("http://", "") + "accounts"));   
 
         // Get Request Date Time on Unix TimeStamp With Fractions
         ObjectMapper mapper = new ObjectMapper();
