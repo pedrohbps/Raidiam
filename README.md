@@ -1,85 +1,51 @@
-### Projeto de automação - Desafio Técnico HostGator ###
+### Technical Task - Raidiam ###
 
-Olá Qas da HostGator, 
+This README provides an overview of the project, including its structure, requirements, and instructions for running the tests. It also highlights the technologies used and the overall approach taken to complete the challenge.
 
-Espero que vocês consigam navegar com tranquilidade por esse projeto. Ele segue uma estrutura simples que descrevo um pouco mais abaixo nesse readme.
-Nesse caso achei melhor incluir os testes de API no mesmo projeto tendo em vista que é apenas um desafio técnico e acho que dois projetos seria um
-pouco excessivo aqui. Em um cenário real, acho que o ideal seria separar as duas suítes em projetos distintos.
+I hope you can easily navigate through this project. It follows a simple structure that I describe in more detail below in this readme.
 
-Um outro ponto que decidir incluir mas talvez não faça muito sentido é a configuração de environments, onde trabalhamos atualmente temos a necessidade
-de executar um mesmo projeto em diferentes ambientes e portanto temos arquivos .properties onde as variáveis específicas de cada ambiente são armazenadas. 
-Nesse caso ficou um pouco pobre, já que estamos em um único ambiente, mas a ideia era mostrar a vocês que conheço esse tipo de implementação.
+Best regards,
+Pedro Pantaleão - pedrohbps@gmail.com
 
-Um outro e último ponto também, o relatório de execução dos testes funcionais é armazenado na pasta target >> cucumber. Ele pode ser visto no browser com o 
-arquivo index.html. Também inclui no repositório um .zip chamado "Report.zip" que contém essa pasta com a última execução que rodei aqui caso queiram vê-la 
-antes de executar o projeto.
+### Requirements ###
 
-Espero que gostem, qualquer dúvida fiquem a vontade para entrar em contato - pedrohbps@gmail.com
-
-### Pré-requesitos ###
-
-* Java 8.
+* Java 8
 
 * Maven
 
-### Tecnologias Utilizadas ###
+### Stack Used ###
 
-* RestAssured
-* Selenium WebDriver
-* Cucumber
-* Junit
-* Lombok
-* Maven
-* Java
+* Testing Frameworks: RestAssured, JUnit
+* Code Utilities: Lombok
+* Build Tool: Maven
+* Programming Language: Java
 
-### Estrutura do projeto ###
+### Project Structure ###
 
-* Common - Classes onde terão métodos em comum que poderão ser usadas por outras classes.
-* Common > Base - A base e onde temos os principais métodos onde utilizamos na automação.
-* Pages - Onde será mapeado os elementos e funções.
-* Models - Onde são criados os objetos que podem ser usados na automação.
-* Runners - Suite principal para execução dos testes (API e Funcionais).
-* Steps - Onde ficara os passos da automação.
-* Api - Onde ficam os testes de API.
-* Utils - Classes com algumas funções uteis para o projeto.
-* Features - Onde fica as funcionalidades do projeto.
-* config.properties - Onde definimos variáveis para se usar no projeto.
+* Common: Common functions that can be used in most test classes.
+* Models: Data models that can be used in the project.
+* Persistence: DB interface;
+* Runners: Runners for the test classes.
+* Api: The directory of the tests.
+* Utils: Classes for configurations and other thing
 
-### Rodando o projeto ###
+### Running this project ###
 
-Em alguns casos, a depender de suas configurações locais, pode ser necessário executar o projeto com permissões de administrador adicionando "sudo" antes dos comandos abaixo.
-
-* Acessa a pasta do projeto
-* Rode o seguinte comando do maven:
-
-## Execução dos Testes de API ##
+In some cases, depending on your local settings, it may be necessary to run the project with administrator permissions by adding "sudo" before the commands below.
 
 ```
-mvn clean test -Dtest=ApiRunner -Denvironment=environmentA
+mvn clean test -Dtest=ApiRunner -Denvironment=local
 ```
 
-## Execução dos Testes Funcionais ##
+### To-Dos ###
 
-- O projeto executa com chrome, não headless, por default:
+* Create a Dockerfile for containerized execution.
+* Develop a Makefile for streamlined build and test tasks.
+* Refactor the consent workflow into a dedicated class.
+* Eliminate hardcoded values and implement configuration management.
 
-```
-mvn clean test -Dtest=CucumberRunner -Denvironment=environmentA
-```
+### Observations ###
 
-* Rodar em headless: 
-
-```
- mvn clean test -Dtest=CucumberRunner -Dbrowser=chromeHeadless -Denvironment=environmentA
-```
-
-* Rodar com firefox
-
-```
- mvn clean test -Dtest=CucumberRunner -Dbrowser=firefox -Denvironment=environmentA
-```
-
-* Rodar uma determinada feature pela tag
-
-```
- mvn clean test -Dtest=CucumberRunner -Dbrowser=chromeHeadless -Denvironment=environmentA -Dcucumber.options="-t @nome_da_tag"
-``
+* A persistence folder with interfaces for database connection is included, demonstrating familiarity with database integration in API testing automation.
+* Hardcoded variables are present, highlighting the need for proper configuration management in a real-world project.
+* A Jenkinsfile is provided for CI/CD integration, but further review and refinement are recommended
