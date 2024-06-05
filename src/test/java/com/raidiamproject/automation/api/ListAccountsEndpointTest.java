@@ -1,5 +1,6 @@
 package com.raidiamproject.automation.api;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,6 +33,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +50,7 @@ public class ListAccountsEndpointTest {
         RestAssured.baseURI = "http://localhost:8080/test-api/accounts/v1/"; 
         // Ideally we should add the consent and token generation on this function;
      }
+
     @Test
     public void givenListAccountsApi_CheckStatusCode() {  
         given()
@@ -91,94 +94,147 @@ public class ListAccountsEndpointTest {
         // Validate Other Parts of the Payload
         response.then().body("links.self", is("localhost:8080/test-api/accounts/v1/accounts"));   
 
-        // Validate DateTime
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSSSS");
-        OffsetDateTime dateTimeNow = OffsetDateTime.now();
-
         // Get Request Date Time on Unix TimeStamp With Fractions
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readTree(response.asString()); 
         double requestDateTimeDecimal = new Double(jsonNode.get("meta").get("requestDateTime").asText());
-        //response.then().body("meta.requestDateTime")
         assertThat(isValidUnixTimestamp(requestDateTimeDecimal), is(true));
+    }
+
+    @Test
+    public void givenListAccountsApi_ClientWithoutConsent() {
+        String tokenWithNoConsentGiven = "eyJhbGciOiAibm9uZSIsInR5cCI6ICJKV1QifQ==.ewogICJzY29wZSI6ICJhY2NvdW50cyBjb25zZW50OnVybjpiYW5rOjA3NWQ1ZWY0LWM5OGQtNGIxMC1hZjAxLWZjYWVjZDhlNGIyNyIsCiAgImNsaWVudF9pZCI6ICJjbGllbnQxIgp9.";
+
+        Response response = given()
+        .contentType("application/json")
+        .header("Authorization", "Bearer " + tokenWithNoConsentGiven)
+        .when()
+        .get("/accounts")
+        .then()
+        .extract().response();
+
+        // Validate Status Code
+        response.then().statusCode(404);
+
+        // Validate Payload Structure and Types
+        response.then().body("message", isA(String.class)); 
+        response.then().body("message", equalTo("Not Found")); 
+
+        response.then().body("_links.self.href", isA(String.class)); 
+        response.then().body("_links.self.href", is("/test-api/accounts/v1/accounts")); 
+        response.then().body("_links.self.templated", isA(Boolean.class)); 
+        response.then().body("_links.self.templated", equalTo(false));
 
 
-        // ZoneId zoneId = ZoneId.of("Brazil/East"); 
-        // Instant timestamp = Instant.now();
-        // double d = (double) timestamp.getEpochSecond() + (double) timestamp.getNano();// / 1000_000_000;
+        response.then().body("_embedded.errors", isA(List.class)); 
+        response.then().body("_embedded.errors.message", everyItem(isA(String.class)));
 
-        // System.out.println("d: " + d);
-        // System.out.println("requestDateTimeDecimal: " + requestDateTimeDecimal);
+        //To-do create function to generate token and consent
+        response.then().body("_embedded.errors.message", contains("Consent Id urn:bank:075d5ef4-c98d-4b10-af01-fcaecd8e4b27 not found"));
 
-        //  assertThat(d, allOf(
-        //      greaterThan(requestDateTimeDecimal),  // Assert value2 is greater than value1
-        //      closeTo(requestDateTimeDecimal, 1000)  // Assert value2 is close to value1 within tolerance
-        //  ));
+        response.then().body("_embedded.errors._links", isA(List.class)); 
+        response.then().body("_embedded.errors._embedded", isA(List.class)); 
 
-        // long seconds = (long) requestDateTimeDecimal;  
-        // int nanos = (int) ((requestDateTimeDecimal - seconds) * 1_000_000_000); 
-        // Instant instant = Instant.ofEpochSecond(seconds, nanos);
+    }
 
-        // // Adjust to GMT - 3
-        
-        // LocalDateTime dateTime = LocalDateTime.ofInstant(instant, zoneId);
-        // System.out.println("dateTime: " + dateTime);
-        
-        // String formattedRequestTime = dateTime.format(formatter);
-        // String formatteddateTimeNow = dateTimeNow.format(formatter);
+    @Test
+    public void givenListAccountsApi_RequestWithoutToken() {
+        Response response = given()
+        .contentType("application/json")
+        .when()
+        .get("/accounts")
+        .then()
+        .extract().response();
 
-        
+        // Validate Status Code
+        response.then().statusCode(401);
 
-       
-        // Instant datetime = Instant.now();
+        // Validate Payload Structure and Types
+        response.then().body("message", isA(String.class)); 
+        response.then().body("message", equalTo("Unauthorized")); 
 
-        // // Extract needed information: date time as seconds + fraction of that second
-        // long secondsFromEpoch = datetime.getEpochSecond();
-        // int nanoFromBeginningOfSecond = datetime.getNano();
-        // double nanoAsFraction = datetime.getNano()/1e9;
-
-        
-
-        //response.then().body("meta.requestDateTime", closeTo(d, 2000));
-
-        // LocalDateTime requestDateTime = Instant.ofEpochSecond((long) requestDateTimeDouble)
-        // .atZone(ZoneId.of("GMT-3"))
-        // .toLocalDateTime();
-
-        // System.out.println("requestDateTime " + requestDateTime + "\n");
-
-        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        // String formattedRequestDateTime = requestDateTime.format(formatter);
+        response.then().body("_links.self.href", isA(String.class)); 
+        response.then().body("_links.self.href", is("/test-api/accounts/v1/accounts")); 
+        response.then().body("_links.self.templated", isA(Boolean.class)); 
+        response.then().body("_links.self.templated", equalTo(false));
 
 
-        //System.out.println("formattedRequestDateTime " + formattedRequestDateTime + "\n");
+        response.then().body("_embedded.errors", isA(List.class)); 
+        response.then().body("_embedded.errors.message", everyItem(isA(String.class)));
 
-   
+        response.then().body("_embedded.errors.message", contains("Unauthorized"));
+
+        response.then().body("_embedded.errors._links", isA(List.class)); 
+        response.then().body("_embedded.errors._embedded", isA(List.class)); 
+
+    }
+
+    @Test
+    public void givenListAccountsApi_ClientWithWrongToken() {
+        String invalidToken = "eyJhbGciOiAibm9uZSIsInR5cCI6ICJKV1QifQ==.ewogICJzY29wZSfdsfdsI6ICJhY2NvdW50cyBjb25zZW50OnVybjpiYW5rOjA3NWQ1ZWY0LWM5OGQtNGIxMC1hZjAxLWZjYWVjZDhlNGIyNyIsCiAgImNsaWVudF9pZCI6ICJjbGllbnQxIgp9.";
+
+        Response response = given()
+        .contentType("application/json")
+        .header("Authorization", "Bearer " + invalidToken)
+        .when()
+        .get("/accounts")
+        .then()
+        .extract().response();
+
+        // Validate Status Code
+        response.then().statusCode(500);
+
+        // Validate Payload Structure and Types
+        response.then().body("message", isA(String.class)); 
+        response.then().body("message", equalTo("Internal Server Error")); 
+
+        response.then().body("_links.self.href", isA(String.class)); 
+        response.then().body("_links.self.href", is("/test-api/accounts/v1/accounts")); 
+        response.then().body("_links.self.templated", isA(Boolean.class)); 
+        response.then().body("_links.self.templated", equalTo(false));
 
 
+        response.then().body("_embedded.errors", isA(List.class)); 
+        response.then().body("_embedded.errors.message", everyItem(isA(String.class)));
+
+        response.then().body("_embedded.errors.message", contains("Internal Server Error: Cannot invoke \"java.util.Map.getOrDefault(Object, Object)\" because \"payload\" is null"));
+
+        response.then().body("_embedded.errors._links", isA(List.class)); 
+        response.then().body("_embedded.errors._embedded", isA(List.class)); 
+
+    }
+
+    @Test
+    public void givenListAccountsApi_RequestWithWrongHTTP() {
+        Response response = given()
+        .contentType("application/json")
+        .header("Authorization", "Bearer " + token)
+        .when()
+        .post("/accounts")
+        .then()
+        .extract().response();
+
+        // Validate Status Code
+        response.then().statusCode(403);
+
+        // Validate Payload Structure and Types
+        response.then().body("message", isA(String.class)); 
+        response.then().body("message", equalTo("Forbidden")); 
+
+        response.then().body("_links.self.href", isA(String.class)); 
+        response.then().body("_links.self.href", is("/test-api/accounts/v1/accounts")); 
+        response.then().body("_links.self.templated", isA(Boolean.class)); 
+        response.then().body("_links.self.templated", equalTo(false));
 
 
+        response.then().body("_embedded.errors", isA(List.class)); 
+        response.then().body("_embedded.errors.message", everyItem(isA(String.class)));
 
+        response.then().body("_embedded.errors.message", contains("Forbidden"));
 
-        // System.out.println("unixTimestampSeconds" + unixTimestampSeconds + "\n");
-        // long unixTimestampMillis = (long) (unixTimestampSeconds * 1000); // Convert to milliseconds
-        // System.out.println("unixTimestampMillis" + unixTimestampMillis + "\n");
-        // LocalDateTime requestDateTime = Instant.ofEpochMilli(unixTimestampMillis)
-        //     .atZone(ZoneId.of("UTC"))
-        //     .toLocalDateTime();
+        response.then().body("_embedded.errors._links", isA(List.class)); 
+        response.then().body("_embedded.errors._embedded", isA(List.class)); 
 
-        // System.out.println("requestDateTime" + requestDateTime + "\n");
-        // // Format for Comparison
-        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        // String formattedRequestDateTime = requestDateTime.format(formatter);
-
-        // System.out.println(formattedRequestDateTime);
-
-        // Ensure the request time is within the expected range and before "now"
-        // response.then().body("meta.requestDateTime", 
-        //     closeTo(unixTimestampSeconds, 10.0) // Allow for 1-second difference
-        // );
-        //response.then().body("meta.requestDateTime", lessThanOrEqualTo(Instant.now().getEpochSecond()));
     }
 
     public static boolean isValidUnixTimestamp(double timestamp) {
