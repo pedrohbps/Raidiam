@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.raidiamproject.automation.utils.EnvironmentProperties;
+import com.raidiamproject.automation.common.Base;
 
 import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.JsonNode;
 import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 
-public class ListAccountsEndpointTest {
+public class ListAccountsEndpointTest extends Base {
 
     private final String systemUrl = EnvironmentProperties.getValue("systemUrl");
 	private final String token = EnvironmentProperties.getValue("validToken");
@@ -27,7 +28,7 @@ public class ListAccountsEndpointTest {
     @Before
     public void setup() {
         RestAssured.baseURI = systemUrl; 
-        // Ideally we should add the consent and token generation on this function;
+        // To-do: Add consent and token workflow in a specific class and remove token from environment variable;
      }
 
     @Test
@@ -215,12 +216,4 @@ public class ListAccountsEndpointTest {
         response.then().body("_embedded.errors._embedded", isA(List.class)); 
 
     }
-
-    public static boolean isValidUnixTimestamp(double timestamp) {
-        long seconds = (long) timestamp; // Get integer part
-        double fraction = timestamp - seconds; // Get fractional part
-
-        return seconds >= 0 && fraction >= 0 && fraction < 1; 
-    }
-
 }

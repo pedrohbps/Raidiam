@@ -1,6 +1,7 @@
 /home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/utils/EnvironmentProperties.java
 /home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/api/ListAccountsEndpointTest.java
 /home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/models/User.java
-/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/common/Browsers.java
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/common/Base.java
 /home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/utils/Environment.java
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/api/GetAccountEndpointTest.java
 /home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/runners/ApiRunner.java
