@@ -233,7 +233,6 @@ public class GetAccountEndpointTest extends Base {
         response.then().statusCode(401);
 
         // Validate Payload Structure and Types
-        // Validate Payload Structure and Types
         response.then().body("message", isA(String.class)); 
         response.then().body("message", equalTo("Unauthorized")); 
 
@@ -252,71 +251,75 @@ public class GetAccountEndpointTest extends Base {
         response.then().body("_embedded.errors._embedded", isA(List.class)); 
     }
 
-    // @Test
-    // public void givenListAccountsApi_ClientWithWrongToken() {
-    //     String invalidToken = "eyJhbGciOiAibm9uZSIsInR5cCI6ICJKV1QifQ==.ewogICJzY29wZSfdsfdsI6ICJhY2NvdW50cyBjb25zZW50OnVybjpiYW5rOjA3NWQ1ZWY0LWM5OGQtNGIxMC1hZjAxLWZjYWVjZDhlNGIyNyIsCiAgImNsaWVudF9pZCI6ICJjbGllbnQxIgp9.";
+    @Test
+    public void givenGetAccountApi_InvalidTokenFormat() {
+        String originalString = token;
+        String invalidToken = token.substring(0, 45) + "sss" + originalString.substring(45);
 
-    //     Response response = given()
-    //     .contentType("application/json")
-    //     .header("Authorization", "Bearer " + invalidToken)
-    //     .when()
-    //     .get("/accounts")
-    //     .then()
-    //     .extract().response();
+        Response response = given()
+        .contentType("application/json")
+        .header("Authorization", "Bearer " + invalidToken)
+        .when()
+        .get("account/" + accountId)
+        .then()
+        .extract().response();
 
-    //     // Validate Status Code
-    //     response.then().statusCode(500);
+        // Validate Status Code
+        response.then().statusCode(500);
 
-    //     // Validate Payload Structure and Types
-    //     response.then().body("message", isA(String.class)); 
-    //     response.then().body("message", equalTo("Internal Server Error")); 
+        // Validate Payload Structure and Types
+        response.then().body("message", isA(String.class)); 
+        response.then().body("message", equalTo("Internal Server Error")); 
 
-    //     response.then().body("_links.self.href", isA(String.class)); 
-    //     response.then().body("_links.self.href", is("/test-api/accounts/v1/accounts")); 
-    //     response.then().body("_links.self.templated", isA(Boolean.class)); 
-    //     response.then().body("_links.self.templated", equalTo(false));
+        response.then().body("_links.self.href", isA(String.class)); 
 
-
-    //     response.then().body("_embedded.errors", isA(List.class)); 
-    //     response.then().body("_embedded.errors.message", everyItem(isA(String.class)));
-
-    //     response.then().body("_embedded.errors.message", contains("Internal Server Error: Cannot invoke \"java.util.Map.getOrDefault(Object, Object)\" because \"payload\" is null"));
-
-    //     response.then().body("_embedded.errors._links", isA(List.class)); 
-    //     response.then().body("_embedded.errors._embedded", isA(List.class)); 
-
-    // }
-
-    // @Test
-    // public void givenListAccountsApi_RequestWithWrongHTTP() {
-    //     Response response = given()
-    //     .contentType("application/json")
-    //     .header("Authorization", "Bearer " + token)
-    //     .when()
-    //     .post("/accounts")
-    //     .then()
-    //     .extract().response();
-
-    //     // Validate Status Code
-    //     response.then().statusCode(403);
-
-    //     // Validate Payload Structure and Types
-    //     response.then().body("message", isA(String.class)); 
-    //     response.then().body("message", equalTo("Forbidden")); 
-
-    //     response.then().body("_links.self.href", isA(String.class)); 
-    //     response.then().body("_links.self.href", is("/test-api/accounts/v1/accounts")); 
-    //     response.then().body("_links.self.templated", isA(Boolean.class)); 
-    //     response.then().body("_links.self.templated", equalTo(false));
+        //This assert will fail as reported in the bugs section, "#" will make every character afeter be ignored
+        response.then().body("_links.self.href", is("/test-api/accounts/v1/account/" + accountId)); 
+        response.then().body("_links.self.templated", isA(Boolean.class)); 
+        response.then().body("_links.self.templated", equalTo(false));
 
 
-    //     response.then().body("_embedded.errors", isA(List.class)); 
-    //     response.then().body("_embedded.errors.message", everyItem(isA(String.class)));
+        response.then().body("_embedded.errors", isA(List.class)); 
+        response.then().body("_embedded.errors.message", everyItem(isA(String.class)));
 
-    //     response.then().body("_embedded.errors.message", contains("Forbidden"));
+        response.then().body("_embedded.errors.message", contains("Internal Server Error: Cannot invoke \"java.util.Map.getOrDefault(Object, Object)\" because \"payload\" is null"));
 
-    //     response.then().body("_embedded.errors._links", isA(List.class)); 
-    //     response.then().body("_embedded.errors._embedded", isA(List.class)); 
+        response.then().body("_embedded.errors._links", isA(List.class)); 
+        response.then().body("_embedded.errors._embedded", isA(List.class)); 
 
-    // }
+    }
+
+    @Test
+    public void givenGetAccountApi_InvalidHTTPMethod() {
+        Response response = given()
+        .contentType("application/json")
+        .header("Authorization", "Bearer " + token)
+        .when()
+        .post("account/" + accountId)
+        .then()
+        .extract().response();
+
+        // Validate Status Code
+        response.then().statusCode(403);
+
+
+        // Validate Payload Structure and Types
+        response.then().body("message", isA(String.class)); 
+        response.then().body("message", equalTo("Forbidden")); 
+
+        response.then().body("_links.self.href", isA(String.class)); 
+        response.then().body("_links.self.href", is("/test-api/accounts/v1/account/" + accountId)); 
+        response.then().body("_links.self.templated", isA(Boolean.class)); 
+        response.then().body("_links.self.templated", equalTo(false));
+
+
+        response.then().body("_embedded.errors", isA(List.class)); 
+        response.then().body("_embedded.errors.message", everyItem(isA(String.class)));
+
+        response.then().body("_embedded.errors.message", contains("Forbidden"));
+
+        response.then().body("_embedded.errors._links", isA(List.class)); 
+        response.then().body("_embedded.errors._embedded", isA(List.class)); 
+
+    }
 }
