@@ -1,0 +1,11 @@
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/utils/EnvironmentProperties.java
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/api/ListAccountsEndpointTest.java
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/persistence/dao/AccountsDAO.java
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/tables/Accounts.java
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/models/Account.java
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/utils/ConnectionDataBase.java
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/common/Base.java
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/utils/Environment.java
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/persistence/implementsdao/AccountsDAOImpl.java
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/api/GetAccountEndpointTest.java
+/home/pedro.pantaleao/repos/Testes/Raidiam/src/test/java/com/raidiamproject/automation/runners/ApiRunner.java

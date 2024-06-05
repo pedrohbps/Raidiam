@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="15" failures="0" name="com.raidiamproject.automation.runners.ApiRunner" time="2.652" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="java.vm.version" value="17.0.10+7-Ubuntu-122.04.1"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-17-openjdk-amd64/lib"/>
+    <property name="maven.multiModuleProjectDirectory" value="/home/pedro.pantaleao/repos/Testes/Raidiam"/>
+    <property name="java.vm.vendor" value="Private Build"/>
+    <property name="java.vendor.url" value="Unknown"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="path.separator" value=":"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="user.country" value="BR"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="test" value="ApiRunner"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/home/pedro.pantaleao/repos/Testes/Raidiam"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="java.runtime.version" value="17.0.10+7-Ubuntu-122.04.1"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="os.name" value="Linux"/>
+    <property name="classworlds.conf" value="/usr/share/maven/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+    <property name="maven.conf" value="/usr/share/maven/conf"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="java.class.version" value="61.0"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.5.0-35-generic"/>
+    <property name="library.jansi.path" value="/usr/share/maven/lib/jansi-native"/>
+    <property name="user.home" value="/root"/>
+    <property name="user.timezone" value="America/Sao_Paulo"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.specification.version" value="17"/>
+    <property name="user.name" value="root"/>
+    <property name="java.class.path" value="/usr/share/maven/boot/plexus-classworlds-2.x.jar"/>
+    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean test -Dtest=ApiRunner -Denvironment=local"/>
+    <property name="java.home" value="/usr/lib/jvm/java-17-openjdk-amd64"/>
+    <property name="user.language" value="pt"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.version" value="17.0.10"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Private Build"/>
+    <property name="environment" value="local"/>
+    <property name="sun.stderr.encoding" value="UTF-8"/>
+    <property name="maven.home" value="/usr/share/maven"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.version.date" value="2024-01-16"/>
+    <property name="java.vendor.url.bug" value="Unknown"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.stdout.encoding" value="UTF-8"/>
+  </properties>
+  <testcase classname="com.raidiamproject.automation.api.ListAccountsEndpointTest" name="givenListAccountsEndpoint_RequestWithoutToken" time="1.468"/>
+  <testcase classname="com.raidiamproject.automation.api.ListAccountsEndpointTest" name="givenListAccountsEndpoint_ClientWithoutConsent" time="0.126"/>
+  <testcase classname="com.raidiamproject.automation.api.ListAccountsEndpointTest" name="givenListAccountsEndpoint_ClientWithWrongToken" time="0.097"/>
+  <testcase classname="com.raidiamproject.automation.api.ListAccountsEndpointTest" name="givenListAccountsEndpoint_CheckContract" time="0.268"/>
+  <testcase classname="com.raidiamproject.automation.api.ListAccountsEndpointTest" name="givenListAccountsEndpoint_CheckStatusCode" time="0.011"/>
+  <testcase classname="com.raidiamproject.automation.api.ListAccountsEndpointTest" name="givenListAccountsEndpoint_RequestWithWrongHTTP" time="0.105"/>
+  <testcase classname="com.raidiamproject.automation.api.GetAccountEndpointTest" name="givenGetAccountEndpoint_InvalidUUID" time="0.096"/>
+  <testcase classname="com.raidiamproject.automation.api.GetAccountEndpointTest" name="givenGetAccountEndpoint_CheckStatusCode" time="0.012"/>
+  <testcase classname="com.raidiamproject.automation.api.GetAccountEndpointTest" name="givenGetAccountEndpoint_EmptyAccountId" time="0.075"/>
+  <testcase classname="com.raidiamproject.automation.api.GetAccountEndpointTest" name="givenGetAccountEndpoint_NonexistentAccountId" time="0.069"/>
+  <testcase classname="com.raidiamproject.automation.api.GetAccountEndpointTest" name="givenGetAccountEndpoint_InvalidTokenFormat" time="0.067"/>
+  <testcase classname="com.raidiamproject.automation.api.GetAccountEndpointTest" name="givenGetAccountEndpoint_CheckContract" time="0.042"/>
+  <testcase classname="com.raidiamproject.automation.api.GetAccountEndpointTest" name="givenGetAccountEndpoint_UUIDWithSpecialChars" time="0.085"/>
+  <testcase classname="com.raidiamproject.automation.api.GetAccountEndpointTest" name="givenGetAccountEndpoint_ClientWithoutToken" time="0.069"/>
+  <testcase classname="com.raidiamproject.automation.api.GetAccountEndpointTest" name="givenGetAccountEndpoint_InvalidHTTPMethod" time="0.062"/>
+</testsuite>

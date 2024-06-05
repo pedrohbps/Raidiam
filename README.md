@@ -37,6 +37,8 @@ In some cases, depending on your local settings, it may be necessary to run the 
 mvn clean test -Dtest=ApiRunner -Denvironment=local
 ```
 
+![alt text](image.png)
+
 ### To-Dos ###
 
 * Create a Dockerfile for containerized execution.
