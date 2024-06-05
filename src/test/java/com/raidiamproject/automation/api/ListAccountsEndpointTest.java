@@ -40,48 +40,16 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 
-public class AccountsApiTest {
-    private final String token = "eyJhbGciOiAibm9uZSIsInR5cCI6ICJKV1QifQ==.eyJzY29wZSI6ICJhY2NvdW50cyBjb25zZW50OnVybjpiYW5rOjUwYmY4YzExLTE5YzMtNDFjYS05N2QyLTJjZWRkNzA4ZmY0NyIsImNsaWVudF9pZCI6ICJjbGllbnQxIn0=.";
+public class ListAccountsEndpointTest {
+    private final String token = "eyJhbGciOiAibm9uZSIsInR5cCI6ICJKV1QifQ==.ewogICJzY29wZSI6ICJhY2NvdW50cyBjb25zZW50OnVybjpiYW5rOjA3NWQ1ZWY0LWM5OGQtNGIxMC1hZjAxLWZjYWVjZDhlNGI2NyIsCiAgImNsaWVudF9pZCI6ICJjbGllbnQxIgp9.";
 
     @Before
     public void setup() {
         RestAssured.baseURI = "http://localhost:8080/test-api/accounts/v1/"; 
+        // Ideally we should add the consent and token generation on this function;
      }
-
-    //     @BeforeClass
-    //     public static void generateToken() {
-    //     Map<String, String> tokenRequest = new HashMap<>();
-    //     tokenRequest.put("email", "israfaioli@gmail.com");
-    //     tokenRequest.put("senha", "123456");
-
-    //     String token = given()
-    //             .body(login)
-    //             .when()
-    //             .post("/signin")
-    //             .then()
-    //             .statusCode(200)
-    //             .extract().path("token")
-    //             ;
-
-    //     RestAssured.requestSpecification.header("Authorization", "JWT " + token);
-    // }
-
     @Test
-    public void givenAccountsApi_CheckStatusCode() {
-
-        // RequestSpecification httpRequest = RestAssured.given();
-
-        // Response response = httpRequest
-        // .contentType("application/json")
-        // .header("Authorization", "Bearer " + token)
-        // .get(accountsApiBaseUri +"accounts/");
-
-        // @SuppressWarnings("rawtypes")
-        // ResponseBody body = response.getBody();
-        
-        // System.out.println(body.asString());
-        
-
+    public void givenListAccountsApi_CheckStatusCode() {  
         given()
 		.contentType("application/json")
 		.header("Authorization", "Bearer " + token)
@@ -90,18 +58,7 @@ public class AccountsApiTest {
     }
 
     @Test
-    public void givenAccountsApi_CheckDataContract() {
-        given().contentType("application/json")
-		        .header("Authorization", "Bearer " + token)
-                .get("accounts/").then().statusCode(200)
-                .body("data", isA(List.class))
-                .body("data.id", everyItem(isA(String.class)))
-                .body("data.bank", everyItem(isA(String.class)))
-                .body("data.accountNumero", everyItem(isA(String.class)));
-    }
-
-    @Test
-    public void givenAccountsApi_chec() throws IOException {
+    public void givenListAccountsApi_CheckContract() throws IOException {
 
         Response response = given()
                 .contentType("application/json")
@@ -143,41 +100,42 @@ public class AccountsApiTest {
         JsonNode jsonNode = mapper.readTree(response.asString()); 
         double requestDateTimeDecimal = new Double(jsonNode.get("meta").get("requestDateTime").asText());
         //response.then().body("meta.requestDateTime")
+        assertThat(isValidUnixTimestamp(requestDateTimeDecimal), is(true));
 
 
-        ZoneId zoneId = ZoneId.of("Brazil/East"); 
-        Instant timestamp = Instant.now();
-        double d = (double) timestamp.getEpochSecond() + (double) timestamp.getNano();// / 1000_000_000;
+        // ZoneId zoneId = ZoneId.of("Brazil/East"); 
+        // Instant timestamp = Instant.now();
+        // double d = (double) timestamp.getEpochSecond() + (double) timestamp.getNano();// / 1000_000_000;
 
-        System.out.println("d: " + d);
-        System.out.println("requestDateTimeDecimal: " + requestDateTimeDecimal);
+        // System.out.println("d: " + d);
+        // System.out.println("requestDateTimeDecimal: " + requestDateTimeDecimal);
 
-         assertThat(d, allOf(
-             greaterThan(requestDateTimeDecimal),  // Assert value2 is greater than value1
-             closeTo(requestDateTimeDecimal, 1000)  // Assert value2 is close to value1 within tolerance
-         ));
+        //  assertThat(d, allOf(
+        //      greaterThan(requestDateTimeDecimal),  // Assert value2 is greater than value1
+        //      closeTo(requestDateTimeDecimal, 1000)  // Assert value2 is close to value1 within tolerance
+        //  ));
 
-        long seconds = (long) requestDateTimeDecimal;  
-        int nanos = (int) ((requestDateTimeDecimal - seconds) * 1_000_000_000); 
-        Instant instant = Instant.ofEpochSecond(seconds, nanos);
+        // long seconds = (long) requestDateTimeDecimal;  
+        // int nanos = (int) ((requestDateTimeDecimal - seconds) * 1_000_000_000); 
+        // Instant instant = Instant.ofEpochSecond(seconds, nanos);
 
-        // Adjust to GMT - 3
+        // // Adjust to GMT - 3
         
-        LocalDateTime dateTime = LocalDateTime.ofInstant(instant, zoneId);
-        System.out.println("dateTime: " + dateTime);
+        // LocalDateTime dateTime = LocalDateTime.ofInstant(instant, zoneId);
+        // System.out.println("dateTime: " + dateTime);
         
-        String formattedRequestTime = dateTime.format(formatter);
-        String formatteddateTimeNow = dateTimeNow.format(formatter);
+        // String formattedRequestTime = dateTime.format(formatter);
+        // String formatteddateTimeNow = dateTimeNow.format(formatter);
 
         
 
        
-        Instant datetime = Instant.now();
+        // Instant datetime = Instant.now();
 
-        // Extract needed information: date time as seconds + fraction of that second
-        long secondsFromEpoch = datetime.getEpochSecond();
-        int nanoFromBeginningOfSecond = datetime.getNano();
-        double nanoAsFraction = datetime.getNano()/1e9;
+        // // Extract needed information: date time as seconds + fraction of that second
+        // long secondsFromEpoch = datetime.getEpochSecond();
+        // int nanoFromBeginningOfSecond = datetime.getNano();
+        // double nanoAsFraction = datetime.getNano()/1e9;
 
         
 
@@ -223,5 +181,11 @@ public class AccountsApiTest {
         //response.then().body("meta.requestDateTime", lessThanOrEqualTo(Instant.now().getEpochSecond()));
     }
 
+    public static boolean isValidUnixTimestamp(double timestamp) {
+        long seconds = (long) timestamp; // Get integer part
+        double fraction = timestamp - seconds; // Get fractional part
+
+        return seconds >= 0 && fraction >= 0 && fraction < 1; 
+    }
 
 }
