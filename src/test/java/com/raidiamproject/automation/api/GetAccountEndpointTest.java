@@ -33,7 +33,7 @@ public class GetAccountEndpointTest extends Base {
      }
 
     @Test
-    public void givenGetAccountApi_CheckStatusCode() {  
+    public void givenGetAccountEndpoint_CheckStatusCode() {  
         given()
 		.contentType("application/json")
 		.header("Authorization", "Bearer " + token)
@@ -42,7 +42,7 @@ public class GetAccountEndpointTest extends Base {
     }
 
     @Test
-    public void givenGetAccountApi_CheckContract() throws IOException {
+    public void givenGetAccountEndpoint_CheckContract() throws IOException {
 
         Response response = given()
                 .contentType("application/json")
@@ -82,7 +82,7 @@ public class GetAccountEndpointTest extends Base {
     }
 
     @Test
-    public void givenGetAccountApi_NonexistentAccountId() {
+    public void givenGetAccountEndpoint_NonexistentAccountId() {
         String nonexistentAccountId = "8f9c3d2a-211e-4a16-b159-1278362190a2";
 
         Response response = given()
@@ -117,7 +117,7 @@ public class GetAccountEndpointTest extends Base {
     }
 
     @Test
-    public void givenGetAccountApi_EmptyAccountId() {
+    public void givenGetAccountEndpoint_EmptyAccountId() {
         Response response = given()
         .contentType("application/json")
         .header("Authorization", "Bearer " + token)
@@ -149,7 +149,7 @@ public class GetAccountEndpointTest extends Base {
     }
 
     @Test
-    public void givenGetAccountApi_InvalidUUID() {
+    public void givenGetAccountEndpoint_InvalidUUID() {
         String invalidUUID = accountId + "abc";
 
         Response response = given()
@@ -184,7 +184,7 @@ public class GetAccountEndpointTest extends Base {
     }
 
     @Test
-    public void givenGetAccountApi_UUIDWithSpecialChars() {
+    public void givenGetAccountEndpoint_UUIDWithSpecialChars() {
         String UUIDWithSpecialChars = accountId + "!@#$%";
 
         Response response = given()
@@ -221,7 +221,7 @@ public class GetAccountEndpointTest extends Base {
     }
 
     @Test
-    public void givenGetAccountApi_ClientWithoutToken() {
+    public void givenGetAccountEndpoint_ClientWithoutToken() {
         Response response = given()
         .contentType("application/json")
         .when()
@@ -252,7 +252,7 @@ public class GetAccountEndpointTest extends Base {
     }
 
     @Test
-    public void givenGetAccountApi_InvalidTokenFormat() {
+    public void givenGetAccountEndpoint_InvalidTokenFormat() {
         String originalString = token;
         String invalidToken = token.substring(0, 45) + "sss" + originalString.substring(45);
 
@@ -290,7 +290,7 @@ public class GetAccountEndpointTest extends Base {
     }
 
     @Test
-    public void givenGetAccountApi_InvalidHTTPMethod() {
+    public void givenGetAccountEndpoint_InvalidHTTPMethod() {
         Response response = given()
         .contentType("application/json")
         .header("Authorization", "Bearer " + token)

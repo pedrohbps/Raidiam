@@ -32,7 +32,7 @@ public class ListAccountsEndpointTest extends Base {
      }
 
     @Test
-    public void givenListAccountsApi_CheckStatusCode() {  
+    public void givenListAccountsEndpoint_CheckStatusCode() {  
         given()
 		.contentType("application/json")
 		.header("Authorization", "Bearer " + token)
@@ -41,7 +41,7 @@ public class ListAccountsEndpointTest extends Base {
     }
 
     @Test
-    public void givenListAccountsApi_CheckContract() throws IOException {
+    public void givenListAccountsEndpoint_CheckContract() throws IOException {
 
         Response response = given()
                 .contentType("application/json")
@@ -82,7 +82,7 @@ public class ListAccountsEndpointTest extends Base {
     }
 
     @Test
-    public void givenListAccountsApi_ClientWithoutConsent() {
+    public void givenListAccountsEndpoint_ClientWithoutConsent() {
         String tokenWithNoConsentGiven = "eyJhbGciOiAibm9uZSIsInR5cCI6ICJKV1QifQ==.ewogICJzY29wZSI6ICJhY2NvdW50cyBjb25zZW50OnVybjpiYW5rOjA3NWQ1ZWY0LWM5OGQtNGIxMC1hZjAxLWZjYWVjZDhlNGIyNyIsCiAgImNsaWVudF9pZCI6ICJjbGllbnQxIgp9.";
 
         Response response = given()
@@ -118,7 +118,7 @@ public class ListAccountsEndpointTest extends Base {
     }
 
     @Test
-    public void givenListAccountsApi_RequestWithoutToken() {
+    public void givenListAccountsEndpoint_RequestWithoutToken() {
         Response response = given()
         .contentType("application/json")
         .when()
@@ -150,7 +150,7 @@ public class ListAccountsEndpointTest extends Base {
     }
 
     @Test
-    public void givenListAccountsApi_ClientWithWrongToken() {
+    public void givenListAccountsEndpoint_ClientWithWrongToken() {
         String invalidToken = "eyJhbGciOiAibm9uZSIsInR5cCI6ICJKV1QifQ==.ewogICJzY29wZSfdsfdsI6ICJhY2NvdW50cyBjb25zZW50OnVybjpiYW5rOjA3NWQ1ZWY0LWM5OGQtNGIxMC1hZjAxLWZjYWVjZDhlNGIyNyIsCiAgImNsaWVudF9pZCI6ICJjbGllbnQxIgp9.";
 
         Response response = given()
@@ -185,7 +185,7 @@ public class ListAccountsEndpointTest extends Base {
     }
 
     @Test
-    public void givenListAccountsApi_RequestWithWrongHTTP() {
+    public void givenListAccountsEndpoint_RequestWithWrongHTTP() {
         Response response = given()
         .contentType("application/json")
         .header("Authorization", "Bearer " + token)
