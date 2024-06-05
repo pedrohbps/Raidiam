@@ -6,10 +6,18 @@ import java.util.Properties;
 
 public enum Environment {
 
-    ENVIRONMENTA("environmentA") {
+    LOCAL("local") {
         @Override
         public String getProp(String value) {
-            return getPropertiesFile(EnvironmentProperties.PROPERTIESA).getProperty(value);
+            return getPropertiesFile(EnvironmentProperties.PROPERTIESLOCAL).getProperty(value);
+        }
+
+    },
+
+    QA("qa") {
+        @Override
+        public String getProp(String value) {
+            return getPropertiesFile(EnvironmentProperties.PROPERTIESQA).getProperty(value);
         }
 
     };

@@ -4,7 +4,8 @@ import java.util.Properties;
 
 public class EnvironmentProperties {
 
-    static final String PROPERTIESA = "./src/test/resources/environmentA.properties";
+    static final String PROPERTIESLOCAL = "./src/test/resources/local.properties";
+    static final String PROPERTIESQA = "./src/test/resources/qa.properties";
     static Properties properties;
 
     public static String getValue(String value) {

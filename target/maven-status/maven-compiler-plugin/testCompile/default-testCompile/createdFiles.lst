@@ -1,5 +1,6 @@
 com/raidiamproject/automation/utils/EnvironmentProperties.class
 com/raidiamproject/automation/models/User.class
+com/raidiamproject/automation/utils/Environment$2.class
 com/raidiamproject/automation/api/ListAccountsEndpointTest.class
 com/raidiamproject/automation/common/Browsers.class
 com/raidiamproject/automation/runners/ApiRunner.class

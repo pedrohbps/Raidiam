@@ -1,53 +1,32 @@
 package com.raidiamproject.automation.api;
 
-import org.hamcrest.Matchers;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
+import com.raidiamproject.automation.utils.EnvironmentProperties;
 
 import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.JsonNode;
 import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
-import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 
 public class ListAccountsEndpointTest {
-    private final String token = "eyJhbGciOiAibm9uZSIsInR5cCI6ICJKV1QifQ==.ewogICJzY29wZSI6ICJhY2NvdW50cyBjb25zZW50OnVybjpiYW5rOjA3NWQ1ZWY0LWM5OGQtNGIxMC1hZjAxLWZjYWVjZDhlNGI2NyIsCiAgImNsaWVudF9pZCI6ICJjbGllbnQxIgp9.";
+
+    private final String systemUrl = EnvironmentProperties.getValue("systemUrl");
+	private final String token = EnvironmentProperties.getValue("validToken");
 
     @Before
     public void setup() {
-        RestAssured.baseURI = "http://localhost:8080/test-api/accounts/v1/"; 
+        RestAssured.baseURI = systemUrl; 
         // Ideally we should add the consent and token generation on this function;
      }
 
